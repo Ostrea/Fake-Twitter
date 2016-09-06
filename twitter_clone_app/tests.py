@@ -6,13 +6,12 @@ class ViewTests(TestCase):
 
     def test_index_view(self):
         """
-        Should get 'index.html' template.
+        Should get 'index.html' template with appropriate title.
         """
         response = self.client.get(reverse('twitter_clone_app:index'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.templates[0].name,
-                         "twitter_clone_app/index.html")
+        self.assertTemplateUsed(response, 'twitter_clone_app/index.html')
 
     def test_help_view(self):
         """
@@ -21,8 +20,7 @@ class ViewTests(TestCase):
         response = self.client.get(reverse('twitter_clone_app:help'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.templates[0].name,
-                         "twitter_clone_app/help.html")
+        self.assertTemplateUsed(response, 'twitter_clone_app/help.html')
 
     def test_about_view(self):
         """
@@ -31,5 +29,4 @@ class ViewTests(TestCase):
         response = self.client.get(reverse('twitter_clone_app:about'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.templates[0].name,
-                         "twitter_clone_app/about.html")
+        self.assertTemplateUsed(response, 'twitter_clone_app/about.html')
