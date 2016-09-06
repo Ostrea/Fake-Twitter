@@ -9,3 +9,7 @@ def index(request):
 
 def help(request):
     return render(request, 'twitter_clone_app/help.html')
+
+
+def about(request):
+    return render(request, 'twitter_clone_app/about.html')

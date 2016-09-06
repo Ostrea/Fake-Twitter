@@ -23,3 +23,13 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.templates[0].name,
                          "twitter_clone_app/help.html")
+
+    def test_about_view(self):
+        """
+        Should get 'about.html' template.
+        """
+        response = self.client.get(reverse('twitter_clone_app:about'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.templates[0].name,
+                         "twitter_clone_app/about.html")
