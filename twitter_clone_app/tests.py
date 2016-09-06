@@ -12,6 +12,8 @@ class ViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'twitter_clone_app/index.html')
+        self.assertContains(response, '<title>Home | Fake Twitter</title>',
+                            html=True)
 
     def test_help_view(self):
         """
