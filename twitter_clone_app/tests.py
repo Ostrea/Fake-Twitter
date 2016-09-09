@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.test import TestCase
+import django.contrib.auth.models as auth_models
 
 
 class ViewTests(TestCase):
@@ -51,7 +52,7 @@ class ViewTests(TestCase):
 
 class AuthViewTests(TestCase):
 
-    def test_new_user_view(self):
+    def test_sign_up_view(self):
         """
         Should get 'auth/new_user.html' template with appropriate title.
         """
