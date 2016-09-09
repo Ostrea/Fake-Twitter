@@ -60,6 +60,6 @@ class AuthViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/auth/sign_up.html')
+                                'twitter_clone_app/users/sign_up.html')
         self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
                             html=True)

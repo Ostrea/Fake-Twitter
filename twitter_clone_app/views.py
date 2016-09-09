@@ -18,4 +18,4 @@ def contact(request):
 
 
 def sign_up(request):
-    return render(request, 'twitter_clone_app/auth/sign_up.html')
+    return render(request, 'twitter_clone_app/users/sign_up.html')
