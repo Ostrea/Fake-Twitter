@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^help/$', views.help, name='help'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^contact/$', views.contact, name='contact')
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^users/new$', views.new_user, name='new-user')
 ]

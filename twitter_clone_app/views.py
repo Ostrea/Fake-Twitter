@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
-
 
 def home(request):
     return render(request, 'twitter_clone_app/home.html')
@@ -17,3 +15,7 @@ def about(request):
 
 def contact(request):
     return render(request, 'twitter_clone_app/contact.html')
+
+
+def new_user(request):
+    return render(request, 'twitter_clone_app/auth/new_user.html')

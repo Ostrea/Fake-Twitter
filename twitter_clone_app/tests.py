@@ -47,3 +47,18 @@ class ViewTests(TestCase):
         self.assertTemplateUsed(response, 'twitter_clone_app/contact.html')
         self.assertContains(response, '<title>Contact | Fake Twitter</title>',
                             html=True)
+
+
+class AuthViewTests(TestCase):
+
+    def test_new_user_view(self):
+        """
+        Should get 'auth/new_user.html' template with appropriate title.
+        """
+        response = self.client.get(reverse('twitter_clone_app:new-user'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/auth/new_user.html')
+        self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
+                            html=True)
