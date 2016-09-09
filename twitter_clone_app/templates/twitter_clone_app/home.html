@@ -8,6 +8,9 @@
 
     <h2>This is the home page for the Fake Twitter.</h2>
 
-    <a href="#" class="btn btn-lg btn-primary">Sign up now!</a>
+    <a href="{% url 'twitter_clone_app:sign-up' %}"
+       class="btn btn-lg btn-primary">
+        Sign up now!
+    </a>
 </div>
 {% endblock %}
