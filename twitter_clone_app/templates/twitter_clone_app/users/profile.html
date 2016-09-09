@@ -3,5 +3,9 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-    <p>{{ user.username }}, {{ user.email }}</p>
+    <h1>
+        <img src="{{ gravatar_url }}" alt="{{ user.username }}"
+             class="gravatar" />
+        {{ user.username }}
+    </h1>
 {% endblock %}

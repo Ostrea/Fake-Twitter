@@ -24,6 +24,14 @@ def sign_up(request):
 
 
 def user_profile(request, user_id):
+
+    def gravatar_for(user_email):
+        import hashlib
+
+        gravatar_id = (hashlib.md5(user_email.lower().encode('utf-8'))
+                       .hexdigest())
+        return 'https://secure.gravatar.com/avatar/' + gravatar_id
+
     user = get_object_or_404(auth_models.User, pk=user_id)
     return render(request, 'twitter_clone_app/users/profile.html',
-                  {'user': user})
+                  {'user': user, 'gravatar_url': gravatar_for(user.email)})
