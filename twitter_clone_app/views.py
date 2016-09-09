@@ -17,5 +17,5 @@ def contact(request):
     return render(request, 'twitter_clone_app/contact.html')
 
 
-def new_user(request):
-    return render(request, 'twitter_clone_app/auth/new_user.html')
+def sign_up(request):
+    return render(request, 'twitter_clone_app/auth/sign_up.html')

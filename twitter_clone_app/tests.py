@@ -55,10 +55,10 @@ class AuthViewTests(TestCase):
         """
         Should get 'auth/new_user.html' template with appropriate title.
         """
-        response = self.client.get(reverse('twitter_clone_app:new-user'))
+        response = self.client.get(reverse('twitter_clone_app:sign-up'))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/auth/new_user.html')
+                                'twitter_clone_app/auth/sign_up.html')
         self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
                             html=True)
