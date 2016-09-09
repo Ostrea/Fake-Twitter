@@ -20,17 +20,21 @@
     <title>{% block title %}{% endblock %} | Fake Twitter</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <ul class="nav nav-tabs">
-            <li role="presentation">
-                <a href="{% url 'twitter_clone_app:index' %}">Home</a>
-            </li>
-            <li role="presentation">
-                <a href="{% url 'twitter_clone_app:help' %}">Help</a>
-            </li>
-            <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+            <nav>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Log in</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
+    <div class="container-fluid">
         {% block content %}{% endblock %}
     </div>
 </body>
