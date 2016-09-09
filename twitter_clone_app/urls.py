@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^signup$', views.sign_up, name='sign-up'),
 
-    # /users/<pk>/
-    url(r'^users/(?P<pk>[0-9]+)/$', views.UserProfileView.as_view(),
+    # /users/<user_id>/
+    url(r'^users/(?P<user_id>[0-9]+)/$', views.user_profile,
         name='user-profile')
 ]

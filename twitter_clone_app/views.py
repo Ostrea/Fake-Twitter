@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 import django.contrib.auth.models as auth_models
 
@@ -23,6 +23,7 @@ def sign_up(request):
     return render(request, 'twitter_clone_app/users/sign_up.html')
 
 
-class UserProfileView(generic.DetailView):
-    model = auth_models.User
-    template_name = 'twitter_clone_app/users/profile.html'
+def user_profile(request, user_id):
+    user = get_object_or_404(auth_models.User, pk=user_id)
+    return render(request, 'twitter_clone_app/users/profile.html',
+                  {'user': user})
