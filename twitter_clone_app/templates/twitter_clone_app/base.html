@@ -24,8 +24,16 @@
         <div class="container-fluid">
             <nav>
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Help</a></li>
+                    <li>
+                        <a href="{% url 'twitter_clone_app:index' %}">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'twitter_clone_app:help' %}">
+                            Help
+                        </a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Log in</a></li>
