@@ -10,5 +10,9 @@ urlpatterns = [
     url(r'^help/$', views.help, name='help'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
-    url(r'^signup$', views.sign_up, name='sign-up')
+    url(r'^signup$', views.sign_up, name='sign-up'),
+
+    # /users/<pk>/
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserProfileView.as_view(),
+        name='user-profile')
 ]

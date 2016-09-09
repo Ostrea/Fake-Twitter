@@ -63,3 +63,32 @@ class AuthViewTests(TestCase):
                                 'twitter_clone_app/users/sign_up.html')
         self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
                             html=True)
+
+
+class UserViewTests(TestCase):
+
+    def test_profile_page_view_with_existing_user(self):
+        """
+        Should get 'user_detail.html' template with appropriate title
+        when user exists.
+        """
+        existing_user = auth_models.User.objects.create_user(
+            'Test user name', 'test email', '123456')
+
+        response = self.client.get(reverse('twitter_clone_app:user-profile',
+                                           args=(existing_user.id,)))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/profile.html')
+        self.assertContains(response, '<title>Profile | Fake Twitter</title>',
+                            html=True)
+
+    def test_profile_page_view_with_non_existing_user(self):
+        """
+        Should return 404.
+        """
+        response = self.client.get(reverse('twitter_clone_app:user-profile',
+                                           args=(1,)))
+
+        self.assertEqual(response.status_code, 404)
