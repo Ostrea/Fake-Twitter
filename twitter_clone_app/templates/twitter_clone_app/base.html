@@ -25,28 +25,7 @@
     <title>{% block title %}{% endblock %} | Fake Twitter</title>
 </head>
 <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container-fluid">
-            <a href="{% url 'twitter_clone_app:home' %}" id="logo">
-                fake twitter
-            </a>
-            <nav>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="{% url 'twitter_clone_app:home' %}">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'twitter_clone_app:help' %}">
-                            Help
-                        </a>
-                    </li>
-                    <li><a href="#">Log in</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    {% include "twitter_clone_app/header.html" %}
 
     <div class="container-fluid">
         {% block content %}{% endblock %}
