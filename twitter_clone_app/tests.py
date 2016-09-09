@@ -4,14 +4,14 @@ from django.test import TestCase
 
 class ViewTests(TestCase):
 
-    def test_index_view(self):
+    def test_home_view(self):
         """
-        Should get 'index.html' template with appropriate title.
+        Should get 'home.html' template with appropriate title.
         """
-        response = self.client.get(reverse('twitter_clone_app:index'))
+        response = self.client.get(reverse('twitter_clone_app:home'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'twitter_clone_app/index.html')
+        self.assertTemplateUsed(response, 'twitter_clone_app/home.html')
         self.assertContains(response, '<title>Home | Fake Twitter</title>',
                             html=True)
 
