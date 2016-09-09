@@ -36,3 +36,14 @@ class ViewTests(TestCase):
         self.assertTemplateUsed(response, 'twitter_clone_app/about.html')
         self.assertContains(response, '<title>About | Fake Twitter</title>',
                             html=True)
+
+    def test_contact_view(self):
+        """
+        Should get 'contact.html' template with appropriate title.
+        """
+        response = self.client.get(reverse('twitter_clone_app:contact'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'twitter_clone_app/contact.html')
+        self.assertContains(response, '<title>Contact | Fake Twitter</title>',
+                            html=True)

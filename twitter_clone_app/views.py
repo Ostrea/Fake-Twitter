@@ -13,3 +13,7 @@ def help(request):
 
 def about(request):
     return render(request, 'twitter_clone_app/about.html')
+
+
+def contact(request):
+    return render(request, 'twitter_clone_app/contact.html')
