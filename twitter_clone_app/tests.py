@@ -50,7 +50,7 @@ class ViewTests(TestCase):
                             html=True)
 
 
-class AuthViewTests(TestCase):
+class AuthTests(TestCase):
 
     def test_sign_up_view(self):
         """
@@ -63,6 +63,83 @@ class AuthViewTests(TestCase):
                                 'twitter_clone_app/users/sign_up.html')
         self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
                             html=True)
+
+    def test_create_user_creates_user_when_all_fields_are_valid(self):
+        """
+        Post request on `create-user` should create new user,
+        when all fields are valid.
+        """
+        response = self.client.post(reverse('twitter_clone_app:create-user'),
+                                    {'username': 'test user',
+                                     'email': 'test email',
+                                     'password': 'pass',
+                                     'password-confirmation': 'pass'})
+        new_user = auth_models.User.objects.first()
+
+        self.assertEqual(response.status_code, 302)
+
+        self.assertTrue(new_user)
+        self.assertEqual(new_user.username, 'test user')
+        self.assertEqual(new_user.email, 'test email')
+
+    def test_create_user_shows_sign_up_when_password_does_not_match(self):
+        """
+        Post request on `create-user` should show sign up once again,
+        when password doesn't match password confirmation.
+        """
+        response = self.client.post(reverse('twitter_clone_app:create-user'),
+                                    {'username': 'test user',
+                                     'email': 'test email',
+                                     'password': 'pass',
+                                     'password-confirmation': 'pass2'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/sign_up.html')
+
+        self.assertTrue(response.context['errors'])
+        self.assertIn('Password and password confirmation doesn\'t match.',
+                      response.context['errors'])
+
+    def test_create_user_shows_sign_up_when_not_all_fields_are_filled(self):
+        """
+        Post request on `create-user` should show sign up once again,
+        when some fields are missing.
+        """
+        response = self.client.post(reverse('twitter_clone_app:create-user'),
+                                    {'username': '',
+                                     'email': '',
+                                     'password': '',
+                                     'password-confirmation': ''})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/sign_up.html')
+
+        self.assertTrue(response.context['errors'])
+        self.assertIn('Some fields are missing.',
+                      response.context['errors'])
+
+    def test_create_user_shows_sign_up_with_all_errors(self):
+        """
+        If there are errors in submission they all should be
+        shown.
+        """
+        response = self.client.post(reverse('twitter_clone_app:create-user'),
+                                    {'username': '',
+                                     'email': '',
+                                     'password': '1',
+                                     'password-confirmation': '12'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/sign_up.html')
+
+        self.assertTrue(response.context['errors'])
+        self.assertIn('Some fields are missing.',
+                      response.context['errors'])
+        self.assertIn('Password and password confirmation doesn\'t match.',
+                      response.context['errors'])
 
 
 class UserViewTests(TestCase):
