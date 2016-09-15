@@ -17,7 +17,7 @@
         </div>
         {% endif %}
 
-        <form action="{% url 'twitter_clone_app:create-user' %}" method="post">
+        <form action="{% url 'twitter_clone_app:log-in' %}" method="post">
             {% csrf_token %}
 
             <div class="row">
