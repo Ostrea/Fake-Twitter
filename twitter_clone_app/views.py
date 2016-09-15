@@ -26,6 +26,10 @@ def sign_up(request):
     return render(request, 'twitter_clone_app/users/sign_up.html')
 
 
+def log_in(request):
+    return render(request, 'twitter_clone_app/users/log_in.html')
+
+
 @require_POST
 def create_user(request):
     username = request.POST['username']

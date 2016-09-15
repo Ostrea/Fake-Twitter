@@ -141,6 +141,18 @@ class AuthTests(TestCase):
         self.assertIn('Password and password confirmation doesn\'t match.',
                       response.context['errors'])
 
+    def test_login_view(self):
+        """
+        Should get 'auth/login.html' template with appropriate title.
+        """
+        response = self.client.get(reverse('twitter_clone_app:log-in'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/log_in.html')
+        self.assertContains(response, '<title>Log in | Fake Twitter</title>',
+                            html=True)
+
 
 class UserViewTests(TestCase):
 
