@@ -1,6 +1,8 @@
 from django.urls import reverse
 from django.test import TestCase
+
 import django.contrib.auth.models as auth_models
+import unittest.mock as mock
 
 
 class ViewTests(TestCase):
@@ -64,7 +66,9 @@ class AuthTests(TestCase):
         self.assertContains(response, '<title>Sign up | Fake Twitter</title>',
                             html=True)
 
-    def test_create_user_creates_user_when_all_fields_are_valid(self):
+    @mock.patch('twitter_clone_app.views.login', autospec=True)
+    def test_create_user_when_all_fields_are_valid(self,
+                                                   django_auth_login_mock):
         """
         Post request on `create-user` should create new user,
         when all fields are valid and redirect to this user's profile.
@@ -78,6 +82,8 @@ class AuthTests(TestCase):
 
         self.assertRedirects(response, reverse('twitter_clone_app:user-profile',
                                                args=(new_user.id,)))
+
+        django_auth_login_mock.assert_called_once_with(mock.ANY, new_user)
 
         self.assertTrue(new_user)
         self.assertEqual(new_user.username, 'test user')

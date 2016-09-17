@@ -63,6 +63,7 @@ def create_user(request):
         })
 
     new_user = auth_models.User.objects.create_user(username, email, password)
+    login(request, new_user)
 
     return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',
                                         args=(new_user.id,)))
@@ -80,3 +81,8 @@ def user_profile(request, user_id):
     user = get_object_or_404(auth_models.User, pk=user_id)
     return render(request, 'twitter_clone_app/users/profile.html',
                   {'user': user, 'gravatar_url': gravatar_for(user.email)})
+
+
+@require_POST
+def log_out(request):
+    pass
