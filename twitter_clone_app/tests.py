@@ -76,6 +76,7 @@ class AuthTests(TestCase):
                                      'password-confirmation': 'pass'})
         new_user = auth_models.User.objects.first()
 
+        # TODO use assert redirect
         self.assertEqual(response.status_code, 302)
 
         self.assertTrue(new_user)
@@ -152,6 +153,39 @@ class AuthTests(TestCase):
                                 'twitter_clone_app/users/log_in.html')
         self.assertContains(response, '<title>Log in | Fake Twitter</title>',
                             html=True)
+
+    def test_login_post_should_redirect_to_profile_when_valid_credentials(self):
+        """
+        Should redirect to logined user profile page,
+        when username and password are valid.
+        """
+        user = auth_models.User.objects.create_user('username', 'test@test.com',
+                                                    'pass')
+
+        response = self.client.post(reverse('twitter_clone_app:log-in'),
+                                    {'username': 'username',
+                                     'password': 'pass'})
+
+        self.assertRedirects(response, reverse('twitter_clone_app:user-profile',
+                                               args=(user.id,)))
+
+    def test_login_post_should_show_login_page_when_invalid_credentials(self):
+        """
+        Should show login page with error when username or password are invalid.
+        """
+        auth_models.User.objects.create_user('username', 'test@test.com',
+                                             'pass')
+
+        response = self.client.post(reverse('twitter_clone_app:log-in'),
+                                    {'username': 'usernam',
+                                     'password': 'pas'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/log_in.html')
+
+        self.assertTrue(response.context['errors'])
+        self.assertIn('Wrong credentials.', response.context['errors'])
 
 
 class UserViewTests(TestCase):

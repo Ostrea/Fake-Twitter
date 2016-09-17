@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 import django.contrib.auth.models as auth_models
 
@@ -27,7 +28,20 @@ def sign_up(request):
 
 
 def log_in(request):
-    return render(request, 'twitter_clone_app/users/log_in.html')
+    if request.method == 'GET':
+        return render(request, 'twitter_clone_app/users/log_in.html')
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user:
+        login(request, user)
+        return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',
+                                    args=(user.id,)))
+    else:
+        return render(request, 'twitter_clone_app/users/log_in.html', {
+            'errors': ['Wrong credentials.']
+        })
 
 
 @require_POST
