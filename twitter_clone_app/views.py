@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 import django.contrib.auth.models as auth_models
 
@@ -85,4 +85,5 @@ def user_profile(request, user_id):
 
 @require_POST
 def log_out(request):
-    pass
+    logout(request)
+    return HttpResponseRedirect(reverse('twitter_clone_app:home'))

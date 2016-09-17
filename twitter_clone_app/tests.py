@@ -193,6 +193,16 @@ class AuthTests(TestCase):
         self.assertTrue(response.context['errors'])
         self.assertIn('Wrong credentials.', response.context['errors'])
 
+    @mock.patch('twitter_clone_app.views.logout', autospec=True)
+    def test_logout(self, django_auth_logout_mock):
+        """
+        Post to logout url should call django logout and redirect to home.
+        """
+        response = self.client.post(reverse('twitter_clone_app:log-out'))
+
+        self.assertRedirects(response, reverse('twitter_clone_app:home'))
+        django_auth_logout_mock.assert_called_once_with(mock.ANY)
+
 
 class UserViewTests(TestCase):
 
