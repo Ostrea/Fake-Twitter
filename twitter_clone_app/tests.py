@@ -67,7 +67,7 @@ class AuthTests(TestCase):
     def test_create_user_creates_user_when_all_fields_are_valid(self):
         """
         Post request on `create-user` should create new user,
-        when all fields are valid.
+        when all fields are valid and redirect to this user's profile.
         """
         response = self.client.post(reverse('twitter_clone_app:create-user'),
                                     {'username': 'test user',
@@ -76,8 +76,8 @@ class AuthTests(TestCase):
                                      'password-confirmation': 'pass'})
         new_user = auth_models.User.objects.first()
 
-        # TODO use assert redirect
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('twitter_clone_app:user-profile',
+                                               args=(new_user.id,)))
 
         self.assertTrue(new_user)
         self.assertEqual(new_user.username, 'test user')
