@@ -36,7 +36,7 @@ class LogInLogOutTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/users/log_in.html')
+                                'twitter_clone_app/users/login.html')
 
         self.assertTrue(response.context['errors'])
         self.assertIn('Wrong credentials.', response.context['errors'])

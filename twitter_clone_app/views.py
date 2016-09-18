@@ -33,7 +33,7 @@ def sign_up(request):
 @require_http_methods(['GET', 'POST'])
 def log_in(request):
     if request.method == 'GET':
-        return render(request, 'twitter_clone_app/users/log_in.html')
+        return render(request, 'twitter_clone_app/users/login.html')
 
     username = request.POST['username']
     password = request.POST['password']
@@ -43,7 +43,7 @@ def log_in(request):
         return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',
                                     args=(user.id,)))
     else:
-        return render(request, 'twitter_clone_app/users/log_in.html', {
+        return render(request, 'twitter_clone_app/users/login.html', {
             'errors': ['Wrong credentials.']
         })
 
