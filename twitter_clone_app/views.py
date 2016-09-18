@@ -46,6 +46,8 @@ def log_in(request):
 
 @require_POST
 def create_user(request):
+    from django.db.utils import IntegrityError
+
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
@@ -62,7 +64,15 @@ def create_user(request):
             'errors': errors
         })
 
-    new_user = auth_models.User.objects.create_user(username, email, password)
+    try:
+        new_user = auth_models.User.objects.create_user(
+            username, email, password
+        )
+    except IntegrityError:
+        return render(request, 'twitter_clone_app/users/sign_up.html', {
+            'errors': ['Username with such name already exists.']
+        })
+
     login(request, new_user)
 
     return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',

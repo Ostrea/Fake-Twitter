@@ -203,6 +203,28 @@ class AuthTests(TestCase):
         self.assertRedirects(response, reverse('twitter_clone_app:home'))
         django_auth_logout_mock.assert_called_once_with(mock.ANY)
 
+    def test_sign_up_with_existing_username(self):
+        """
+        Trying to sign up with already existing username, should return
+        sign_up view with error.
+        """
+        auth_models.User.objects.create_user('username', 'test@test.com',
+                                             'pass')
+
+        response = self.client.post(reverse('twitter_clone_app:create-user'),
+                                    {'username': 'username',
+                                     'email': 'email',
+                                     'password': '12',
+                                     'password-confirmation': '12'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/sign_up.html')
+
+        self.assertTrue(response.context['errors'])
+        self.assertIn('Username with such name already exists.',
+                      response.context['errors'])
+
 
 class UserViewTests(TestCase):
 
