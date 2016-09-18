@@ -225,6 +225,18 @@ class AuthTests(TestCase):
         self.assertIn('Username with such name already exists.',
                       response.context['errors'])
 
+    def test_edit_view(self):
+        """
+        Should get 'users/edit.html' template with appropriate title.
+        """
+        response = self.client.get(reverse('twitter_clone_app:edit-user'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/edit.html')
+        self.assertContains(response, '<title>Edit | Fake Twitter</title>',
+                            html=True)
+
 
 class UserViewTests(TestCase):
 

@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^help/$', views.help, name='help'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
+
+    # Auth urls
     url(r'^signup/$', views.sign_up, name='sign-up'),
     url(r'^create-user/$', views.create_user, name='create-user'),
     url(r'^login/$', views.log_in, name='log-in'),
@@ -17,5 +19,7 @@ urlpatterns = [
 
     # /users/<user_id>/
     url(r'^users/(?P<user_id>[0-9]+)/$', views.user_profile,
-        name='user-profile')
+        name='user-profile'),
+
+    url(r'^edit/$', views.edit_user, name='edit-user'),
 ]
