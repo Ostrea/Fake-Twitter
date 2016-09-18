@@ -245,6 +245,14 @@ class AuthTests(TestCase):
         self.assertContains(response, '<title>Edit | Fake Twitter</title>',
                             html=True)
 
+    def test_get_at_edit_as_anonymous(self):
+        """
+        Get at edit as anonymous user should redirect to login.
+        """
+        response = self.client.get(reverse('twitter_clone_app:edit-user'))
+
+        self.assertRedirects(response, reverse('twitter_clone_app:log-in'))
+
 
 class UserViewTests(TestCase):
 

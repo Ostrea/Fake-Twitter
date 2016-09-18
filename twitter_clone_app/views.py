@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 import django.contrib.auth.models as auth_models
 
@@ -99,6 +100,7 @@ def log_out(request):
     return HttpResponseRedirect(reverse('twitter_clone_app:home'))
 
 
+@login_required(login_url='/login/', redirect_field_name='')
 def edit_user(request):
     return render(request, 'twitter_clone_app/users/edit.html',
                   {'gravatar_url': gravatar_for(request.user.email)})
