@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods, require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import (authenticate, login, logout,
@@ -30,6 +30,7 @@ def sign_up(request):
     return render(request, 'twitter_clone_app/users/sign_up.html')
 
 
+@require_http_methods(['GET', 'POST'])
 def log_in(request):
     if request.method == 'GET':
         return render(request, 'twitter_clone_app/users/log_in.html')
@@ -100,6 +101,7 @@ def log_out(request):
     return HttpResponseRedirect(reverse('twitter_clone_app:home'))
 
 
+@require_http_methods(['GET', 'POST'])
 @login_required(login_url='/login/', redirect_field_name='')
 def edit_user(request):
     if request.method == 'GET':
