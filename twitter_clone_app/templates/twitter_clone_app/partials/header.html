@@ -23,12 +23,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{% url 'twitter_clone_app:user-profile' user.id%}">
+                            <a href="{% url 'twitter_clone_app:user-profile' user.id %}">
                                 Profile
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{% url 'twitter_clone_app:edit-user' %}">
                                 Settings
                             </a>
                         </li>
