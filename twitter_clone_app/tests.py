@@ -56,7 +56,7 @@ class AuthTests(TestCase):
 
     def test_sign_up_view(self):
         """
-        Should get 'auth/new_user.html' template with appropriate title.
+        Should get 'users/new_user.html' template with appropriate title.
         """
         response = self.client.get(reverse('twitter_clone_app:sign-up'))
 
@@ -150,7 +150,7 @@ class AuthTests(TestCase):
 
     def test_login_view(self):
         """
-        Should get 'auth/login.html' template with appropriate title.
+        Should get 'users/login.html' template with appropriate title.
         """
         response = self.client.get(reverse('twitter_clone_app:log-in'))
 
