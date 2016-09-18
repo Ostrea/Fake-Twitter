@@ -229,6 +229,14 @@ class AuthTests(TestCase):
         """
         Should get 'users/edit.html' template with appropriate title.
         """
+        auth_models.User.objects.create_user('username', 'test@example.com',
+                                             'pass')
+        self.client.post(reverse('twitter_clone_app:log-in'),
+                         {'username': 'username',
+                          'email': 'test@example.com',
+                          'password': 'pass',
+                          'password-confirmation': 'pass'})
+
         response = self.client.get(reverse('twitter_clone_app:edit-user'))
 
         self.assertEqual(response.status_code, 200)
