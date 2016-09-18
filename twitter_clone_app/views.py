@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (authenticate, login, logout,
+                                 update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
+from django.db.utils import IntegrityError
 
 import django.contrib.auth.models as auth_models
 
@@ -47,8 +49,6 @@ def log_in(request):
 
 @require_POST
 def create_user(request):
-    from django.db.utils import IntegrityError
-
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
@@ -102,5 +102,38 @@ def log_out(request):
 
 @login_required(login_url='/login/', redirect_field_name='')
 def edit_user(request):
-    return render(request, 'twitter_clone_app/users/edit.html',
-                  {'gravatar_url': gravatar_for(request.user.email)})
+    if request.method == 'GET':
+        return render(request, 'twitter_clone_app/users/edit.html',
+                      {'gravatar_url': gravatar_for(request.user.email)})
+
+    username = request.POST['username']
+    email = request.POST['email']
+    password = request.POST['password']
+    password_confirmation = request.POST['password-confirmation']
+
+    errors = []
+    if (not username or not email or
+            not password or not password_confirmation):
+        errors.append('Some fields are missing.')
+    if password != password_confirmation:
+        errors.append('Password and password confirmation doesn\'t match.')
+    if errors:
+        return render(request, 'twitter_clone_app/users/edit.html', {
+            'errors': errors
+        })
+
+    request.user.username = username
+    request.user.email = email
+    request.user.set_password(password)
+
+    try:
+        request.user.save()
+    except IntegrityError:
+        return render(request, 'twitter_clone_app/users/edit.html', {
+            'errors': ['Username with such name already exists.']
+        })
+
+    update_session_auth_hash(request, request.user)
+
+    return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',
+                                        args=(request.user.id,)))
