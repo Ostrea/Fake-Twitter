@@ -27,7 +27,7 @@ def contact(request):
 
 
 def sign_up(request):
-    return render(request, 'twitter_clone_app/users/sign_up.html')
+    return render(request, 'twitter_clone_app/users/signup.html')
 
 
 @require_http_methods(['GET', 'POST'])
@@ -62,7 +62,7 @@ def create_user(request):
     if password != password_confirmation:
         errors.append('Password and password confirmation doesn\'t match.')
     if errors:
-        return render(request, 'twitter_clone_app/users/sign_up.html', {
+        return render(request, 'twitter_clone_app/users/signup.html', {
             'errors': errors
         })
 
@@ -71,7 +71,7 @@ def create_user(request):
             username, email, password
         )
     except IntegrityError:
-        return render(request, 'twitter_clone_app/users/sign_up.html', {
+        return render(request, 'twitter_clone_app/users/signup.html', {
             'errors': ['Username with such name already exists.']
         })
 

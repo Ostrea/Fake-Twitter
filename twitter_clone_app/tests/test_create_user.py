@@ -44,7 +44,7 @@ class CreateUserTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/users/sign_up.html')
+                                'twitter_clone_app/users/signup.html')
 
         self.assertTrue(response.context['errors'])
         self.assertIn('Some fields are missing.',
@@ -63,7 +63,7 @@ class CreateUserTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/users/sign_up.html')
+                                'twitter_clone_app/users/signup.html')
 
         self.assertTrue(response.context['errors'])
         self.assertIn('Password and password confirmation doesn\'t match.',
@@ -82,7 +82,7 @@ class CreateUserTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/users/sign_up.html')
+                                'twitter_clone_app/users/signup.html')
 
         self.assertTrue(response.context['errors'])
         self.assertIn('Some fields are missing.',
@@ -106,7 +106,7 @@ class CreateUserTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'twitter_clone_app/users/sign_up.html')
+                                'twitter_clone_app/users/signup.html')
 
         self.assertTrue(response.context['errors'])
         self.assertIn('Username with such name already exists.',
