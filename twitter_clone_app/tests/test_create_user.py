@@ -72,7 +72,7 @@ class CreateUserTests(TestCase):
     def test_create_user_shows_sign_up_with_all_errors(self):
         """
         If there are errors in submission they all should be
-        shown except existing user error.
+        shown except existing username error.
         """
         response = self.client.post(reverse('twitter_clone_app:create-user'),
                                     {'username': '',
