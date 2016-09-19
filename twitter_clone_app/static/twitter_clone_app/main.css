@@ -150,3 +150,16 @@ input, textarea, select, .uneditable-input {
 input {
   height: auto !important;
 }
+
+/* Users all */
+
+.users {
+  list-style: none;
+  margin: 0;
+}
+
+.users li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid #b8b8b8;
+  }
