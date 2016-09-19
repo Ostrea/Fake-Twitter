@@ -6,6 +6,7 @@ from django.contrib.auth import (authenticate, login, logout,
                                  update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
 from django.db.utils import IntegrityError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import django.contrib.auth.models as auth_models
 
@@ -144,7 +145,21 @@ def edit_user(request):
 @login_required(login_url='/login/', redirect_field_name='')
 def show_all_users(request):
     users = auth_models.User.objects.all()
-    users_with_gravatar = {user: gravatar_for(user.email) for user in users}
+    paginator = Paginator(users, 25)
+
+    page = request.GET.get('page')
+    try:
+        paginated_users = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        paginated_users = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        paginated_users = paginator.page(paginator.num_pages)
+
+    users_with_gravatar = {user: gravatar_for(user.email)
+                           for user in paginated_users}
 
     return render(request, 'twitter_clone_app/users/all.html',
-                  {'users': users, 'users_with_gravatar': users_with_gravatar})
+                  {'users': users, 'users_with_gravatar': users_with_gravatar,
+                   'page': paginated_users})
