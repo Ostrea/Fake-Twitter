@@ -1,0 +1,19 @@
+{% extends "twitter_clone_app/base.html" %}
+
+{% block title %}All users{% endblock %}
+
+{% block content %}
+<h1>All users</h1>
+
+<ul class="users">
+{% for user, gravatar_url in users_with_gravatar.items %}
+    <li>
+        <img src="{{ gravatar_url }}" alt="{{ user.username }}"
+                     class="gravatar" />
+        <a href="{% url 'twitter_clone_app:user-profile' user.id %}">
+            {{ user.username }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

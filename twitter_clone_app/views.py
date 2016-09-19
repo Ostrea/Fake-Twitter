@@ -139,3 +139,12 @@ def edit_user(request):
 
     return HttpResponseRedirect(reverse('twitter_clone_app:user-profile',
                                         args=(request.user.id,)))
+
+
+@login_required(login_url='/login/', redirect_field_name='')
+def show_all_users(request):
+    users = auth_models.User.objects.all()
+    users_with_gravatar = {user: gravatar_for(user.email) for user in users}
+
+    return render(request, 'twitter_clone_app/users/all.html',
+                  {'users': users, 'users_with_gravatar': users_with_gravatar})

@@ -130,3 +130,31 @@ class UsersViewTests(TestCase):
         response = self.client.get(reverse('twitter_clone_app:edit-user'))
 
         self.assertRedirects(response, reverse('twitter_clone_app:log-in'))
+
+    def test_get_all_users_view(self):
+        """
+        Should get 'users/all.html' template with appropriate title.
+        """
+        auth_models.User.objects.create_user('username', 'test@example.com',
+                                             'pass')
+        self.client.post(reverse('twitter_clone_app:log-in'),
+                         {'username': 'username',
+                          'email': 'test@example.com',
+                          'password': 'pass',
+                          'password-confirmation': 'pass'})
+
+        response = self.client.get(reverse('twitter_clone_app:show-all-users'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'twitter_clone_app/users/all.html')
+        self.assertContains(response, '<title>All users | Fake Twitter</title>',
+                            html=True)
+
+    def test_get_at_users_all_as_anonymous_should_redirect_to_login(self):
+        """
+        Get at users/all as anonymous user should redirect to login.
+        """
+        response = self.client.get(reverse('twitter_clone_app:show-all-users'))
+
+        self.assertRedirects(response, reverse('twitter_clone_app:log-in'))
