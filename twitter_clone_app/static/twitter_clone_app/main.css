@@ -216,3 +216,9 @@ span.picture {
 span.picture input {
     border: 0;
 }
+
+
+.micropost-form {
+    padding-left: 20px;
+    padding-right: 20px;
+}
