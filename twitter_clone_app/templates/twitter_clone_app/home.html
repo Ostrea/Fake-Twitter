@@ -27,7 +27,8 @@
                   method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <textarea placeholder="Compose new micropost..."></textarea>
+                    <textarea name="content"
+                              placeholder="Compose new micropost..."></textarea>
                 </div>
 
                 <div class="row">
