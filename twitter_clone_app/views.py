@@ -167,3 +167,17 @@ def show_all_users(request):
     return render(request, 'twitter_clone_app/users/all.html',
                   {'users': users, 'users_with_gravatar': users_with_gravatar,
                    'page': paginated_users})
+
+
+@require_POST
+@login_required(login_url='/login/', redirect_field_name='')
+def create_micropost(request):
+    from django.utils import timezone
+
+    request.user.micropost_set.create(
+        content=request.POST['content'],
+        created_at=timezone.now(),
+        updated_at=timezone.now()
+    )
+
+    return HttpResponseRedirect(reverse('twitter_clone_app:home'))

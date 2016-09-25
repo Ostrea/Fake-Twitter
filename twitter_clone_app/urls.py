@@ -23,5 +23,6 @@ urlpatterns = [
         name='user-profile'),
     url(r'^users/all/$', views.show_all_users, name='show-all-users'),
 
-    url(r'^edit/$', views.edit_user, name='edit-user')
+    url(r'^edit/$', views.edit_user, name='edit-user'),
+    url(r'^create-micropost/$', views.create_micropost, name='create-micropost')
 ]
