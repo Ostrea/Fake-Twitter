@@ -12,6 +12,10 @@ import django.contrib.auth.models as auth_models
 
 
 def home(request):
+    if request.user.is_authenticated():
+        return render(request, 'twitter_clone_app/home.html', {
+            'gravatar_url': gravatar_for(request.user.email)
+        })
     return render(request, 'twitter_clone_app/home.html')
 
 

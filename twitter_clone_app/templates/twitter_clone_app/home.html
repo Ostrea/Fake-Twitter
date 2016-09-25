@@ -3,6 +3,42 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<div class="row">
+    <aside class="col-md-4">
+        <section class="user-info">
+            <a href="{% url 'twitter_clone_app:user-profile' user.id %}">
+                <img src="{{ gravatar_url }}" alt="{{ user.username }}"
+                     class="gravatar" />
+            </a>
+            <h1>{{ user.username }}</h1>
+            <span>
+                <a href="{% url 'twitter_clone_app:user-profile' user.id %}">
+                    view my profile
+                </a>
+            </span>
+            <span>
+                {{ user.micropost_set.count }}
+                micropost{{ user.micropost_set.count | pluralize}}
+            </span>
+        </section>
+        <section class="micropost-form">
+            <form action="{% url 'twitter_clone_app:create-micropost' %}"
+                  method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <textarea placeholder="Compose new micropost..."></textarea>
+                </div>
+
+                <div class="row">
+                    <input type="submit" value="Post"
+                           class="btn btn-primary" />
+                </div>
+            </form>
+        </section>
+    </aside>
+</div>
+{% else %}
 <div class="center jumbotron">
     <h1>Welcome to the Fake Twitter</h1>
 
@@ -13,4 +49,5 @@
         Sign up now!
     </a>
 </div>
+{% endif %}
 {% endblock %}
