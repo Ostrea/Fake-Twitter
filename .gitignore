@@ -1,6 +1,4 @@
 *.sqlite3
 .idea/
 twitter_clone/__pycache__/
-twitter_clone_app/__pycache__/
-twitter_clone_app/migrations/__pycache__/
-twitter_clone_app/tests/__pycache__/
+twitter_clone_app/**/__pycache__/
